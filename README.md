@@ -117,3 +117,37 @@ uninstall:
 
 ## General
 All other documentations can be found at the [official NFD install page](http://named-data.net/doc/NFD/current/).
+
+# Raspberry Pi 2 USB Wifi setup
+
+### Step 1"
+`sudo nano /etc/network/interfaces`
+
+Modify as follows:
+
+```
+auto lo
+iface lo inet loopback
+iface eth0 inet manual
+auto wlan0
+allow-hotplug wlan0
+iface wlan0 inet manual
+wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+```
+
+### Step 2:
+`sudo nano /etc/wpa_supplicant/wpa_supplicant.conf`
+
+Enter:
+
+```
+network={
+ssid=”<name_of_WiFi_network>”
+psk=”<password>”
+proto=RSN
+key_mgmt=WPA-PSK
+pairwise=CCMP TKIP
+group=CCMP TKIP
+id_str=”<name_of_WiFi_network>”
+}
+```
