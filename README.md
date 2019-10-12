@@ -3,7 +3,7 @@ The NFD and it's related tools and software packages can be installed on platfor
 
 In this documentation, I will talk about how to perform a step-by-step (as noob as possible) installation of NFD and related software from source on the Raspberry Pi running official Raspbian OS. The trick is two-folds-
 
-* Install **[Raspbian Lite](https://www.raspberrypi.org/downloads/raspbian/)** instead of full Raspbian Stretch with Pixel desktop to save a lot of memory.
+* Install **[Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/)** instead of full Raspbian Buster with desktop to save a lot of memory.
 * Use `clang++` instead of GCC as default compiler to speedup compilation.
 
 The process discussed here has been successfully tested with both Raspberry Pi model 2 and 3b with wireless interface networking.
@@ -17,11 +17,45 @@ The process discussed here has been successfully tested with both Raspberry Pi m
 	* default password : **raspberry**
 * **Prerequisites for Model 2 only**
 	* Plug in USB Wifi dongle.
-	* Follow this tutorial on [How to setup usb wifi on Raspberry Pi 2](https://www.electronicshub.org/setup-wifi-raspberry-pi-2-using-usb-dongle/).
-	* Reboot Pi using 
-```bash
-sudo reboot
-```
+	* Open:
+
+		```bash
+		sudo nano /etc/network/interfaces`
+		```
+
+	* Add at the end and save:
+
+		```bash
+		auto lo
+		iface lo inet loopback
+		iface eth0 inet manual
+		auto wlan0
+		allow-hotplug wlan0
+		iface wlan0 inet manual
+		wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+		```
+
+	* Open:
+
+		```bash
+		sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+		```
+
+	* Add at the end and save:
+
+		```bash
+		network={
+			ssid=”<name_of_WiFi_network>”
+			psk=”<password>”
+		}
+		```
+		
+	* Reboot Pi using
+
+		```bash
+		sudo reboot
+		```
+
 * Connect to wifi by using (do a little google for details or follow [this](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md)) 
 ```bash
 sudo raspi-config
@@ -117,37 +151,3 @@ uninstall:
 
 ## General
 All other documentations can be found at the [official NFD install page](http://named-data.net/doc/NFD/current/).
-
-# Raspberry Pi 2 USB Wifi setup
-
-### Step 1"
-`sudo nano /etc/network/interfaces`
-
-Modify as follows:
-
-```
-auto lo
-iface lo inet loopback
-iface eth0 inet manual
-auto wlan0
-allow-hotplug wlan0
-iface wlan0 inet manual
-wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
-```
-
-### Step 2:
-`sudo nano /etc/wpa_supplicant/wpa_supplicant.conf`
-
-Enter:
-
-```
-network={
-ssid=”<name_of_WiFi_network>”
-psk=”<password>”
-proto=RSN
-key_mgmt=WPA-PSK
-pairwise=CCMP TKIP
-group=CCMP TKIP
-id_str=”<name_of_WiFi_network>”
-}
-```
