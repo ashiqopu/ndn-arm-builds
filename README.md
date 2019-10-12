@@ -49,7 +49,21 @@ The process discussed here has been successfully tested with both Raspberry Pi m
 			psk=”<password>”
 		}
 		```
-		
+	
+	* This is critical for updated raspbian buster:
+	
+	Copy wpa_supplicant to wpa_supplicant-wlan0.conf
+	
+	`sudo cp /etc/wpa_supplicant.conf /etc/wpa_supplicant-wlan0.conf`
+
+	Stop wpa_supplicant
+	
+	`sudo systemctl disable wpa_supplicant.service`
+
+	Start wpa_supplicant@wlan0
+	
+	`systemctl enable wpa_supplicant@wlan0.service`
+	
 	* Reboot Pi using
 
 		```bash
