@@ -15,6 +15,7 @@ The process discussed here has been successfully tested with both Raspberry Pi m
 * Login:
 	* default user : **pi**
 	* default password : **raspberry**
+	* be sure to change the default password to prevent being hacked
 * **Prerequisites for Model 2 only**
 	* Plug in USB Wifi dongle.
 	* Open:
@@ -45,8 +46,8 @@ The process discussed here has been successfully tested with both Raspberry Pi m
 
 		```bash
 		network={
-			ssid=”<name_of_WiFi_network>”
-			psk=”<password>”
+			ssid="<name_of_WiFi_network>"
+			psk="<password>"
 		}
 		```
 	
@@ -62,7 +63,7 @@ The process discussed here has been successfully tested with both Raspberry Pi m
 
 	Start wpa_supplicant@wlan0
 	
-	`systemctl enable wpa_supplicant@wlan0.service`
+	`sudo systemctl enable wpa_supplicant@wlan0.service`
 	
 	* Reboot Pi using
 
